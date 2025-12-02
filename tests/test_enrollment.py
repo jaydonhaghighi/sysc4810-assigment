@@ -99,3 +99,19 @@ def test_enrollment_rejects_disallowed_role(
             users_path=users_path,
         )
 
+
+def test_enrollment_rejects_weak_password(
+    client_role: RoleDefinition, files: tuple[Path, Path]
+) -> None:
+    passwd_path, users_path = files
+    policy = PasswordPolicy(weak_passwords={"password"})
+    with pytest.raises(EnrollmentError):
+        enroll_user(
+            "weak.client",
+            client_role,
+            "password",  # on blacklist
+            policy=policy,
+            passwd_path=passwd_path,
+            users_path=users_path,
+        )
+

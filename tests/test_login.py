@@ -56,6 +56,17 @@ def test_login_rejects_invalid_password(roles, engine, passwd_file: Path) -> Non
         )
 
 
+def test_login_rejects_unknown_user(roles, engine, passwd_file: Path) -> None:
+    with pytest.raises(LoginError):
+        perform_login(
+            "nonexistent.user",
+            "DoesNotMatter@1",
+            engine,
+            roles=roles,
+            passwd_path=passwd_file,
+        )
+
+
 def test_login_fails_for_unknown_role(engine, passwd_file: Path, roles) -> None:
     add_record("ghost.user", "mystery_role", "Valid@123", path=passwd_file, iterations=1000, salt_bytes=8)
     with pytest.raises(LoginError):

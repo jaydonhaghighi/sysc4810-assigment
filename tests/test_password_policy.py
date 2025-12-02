@@ -37,6 +37,25 @@ def test_password_blacklist(policy: PasswordPolicy) -> None:
     assert any("blacklist" in msg for msg in result.violations)
 
 
+def test_default_blacklist_loaded_from_file(monkeypatch, tmp_path):
+    weak_file = tmp_path / "weak_passwords.txt"
+    weak_file.write_text("secretpass\n", encoding="utf-8")
+    monkeypatch.setattr(
+        "justinvest.password_policy.DEFAULT_WEAK_PASSWORDS",
+        weak_file,
+    )
+    policy = PasswordPolicy()
+    result = policy.validate("alice", "secretpass")
+    assert not result.is_valid
+    assert any("blacklist" in msg for msg in result.violations)
+
+
+def test_password_requires_lowercase(policy: PasswordPolicy) -> None:
+    result = policy.validate("alice", "UPPER123!")
+    assert not result.is_valid
+    assert any("lowercase" in msg for msg in result.violations)
+
+
 def test_valid_password_passes(policy: PasswordPolicy) -> None:
     result = policy.validate("alice", "Valid@123")
     assert result.is_valid

@@ -77,3 +77,13 @@ def test_authentication_succeeds_with_valid_credentials(credentials: CredentialS
 def test_authentication_rejects_invalid_password(credentials: CredentialStore) -> None:
     assert credentials.authenticate("sasha.kim", "wrongpass") is None
 
+
+def test_access_denied_for_disallowed_operation(engine: AccessControlEngine) -> None:
+    decision = engine.is_operation_allowed(
+        "client",
+        "MODIFY_INVESTMENT_PORTFOLIO",
+        SessionContext(as_of=datetime(2025, 1, 1, 11, 0)),
+    )
+    assert not decision.granted
+    assert "lacks 'MODIFY_INVESTMENT_PORTFOLIO'" in (decision.reason or "")
+
