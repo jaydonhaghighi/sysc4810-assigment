@@ -1,0 +1,65 @@
+{
+  "users": [
+    {
+      "username": "sasha.kim",
+      "full_name": "Sasha Kim",
+      "role": "client",
+      "password_hash": "pbkdf2_sha256$600000$cda08b5c3c10e5e87b66047848dc26e8$fe8f4482b62938b4e9d682e0ef62cf084c49c955461fbe4cfdaa16d991235ee9"
+    },
+    {
+      "username": "emery.blake",
+      "full_name": "Emery Blake",
+      "role": "client",
+      "password_hash": "pbkdf2_sha256$600000$db57ada8e2882446ee8aee691ea62c9f$1b089dc016241728f37c5ff5c110ec1342b497ea1dffae2ddc7c6cb9b98b7153"
+    },
+    {
+      "username": "noor.abbasi",
+      "full_name": "Noor Abbasi",
+      "role": "premium_client",
+      "password_hash": "pbkdf2_sha256$600000$fd0506a28c27268ac7970de865e90336$9cfcd89fb9a8b70a02b0d1b6c23ddc9864b6c7d83955c961a3b7dc13510888ed"
+    },
+    {
+      "username": "zuri.adebayo",
+      "full_name": "Zuri Adebayo",
+      "role": "premium_client",
+      "password_hash": "pbkdf2_sha256$600000$fa62a652b80b30c7c61405d26ea287b5$43ba429f7b37af9960b2b1728ba98847e6c4c96647c214fcffed16819f2a45c6"
+    },
+    {
+      "username": "mikael.chen",
+      "full_name": "Mikael Chen",
+      "role": "financial_advisor",
+      "password_hash": "pbkdf2_sha256$600000$7585773c490eada017f6ee7a0f4c4555$8dce99007f953c9e906c439d517770633795643a6e3cb37ae61cc1a8db28c04c"
+    },
+    {
+      "username": "jordan.riley",
+      "full_name": "Jordan Riley",
+      "role": "financial_advisor",
+      "password_hash": "pbkdf2_sha256$600000$3824146bcefb37df3f4744105444883f$a1987002e1f97fb7c24fc9136bb4fa58f406ca10c54d239885a5f0a71d7502fa"
+    },
+    {
+      "username": "ellis.nakamura",
+      "full_name": "Ellis Nakamura",
+      "role": "financial_planner",
+      "password_hash": "pbkdf2_sha256$600000$aab90f3215d146ec897963cf60b96101$24abb4400fa6f5f28f26baaff035e8fbe21cf62ac66fc1723711ae7b324c515c"
+    },
+    {
+      "username": "harper.diaz",
+      "full_name": "Harper Diaz",
+      "role": "financial_planner",
+      "password_hash": "pbkdf2_sha256$600000$4e0ecd0d6f062d85f280911ce9bf6fad$bde9d864d3fca2ab79a87abe79528449a84f0b917c5883ed0cca075339b9b8eb"
+    },
+    {
+      "username": "alex.hayes",
+      "full_name": "Alex Hayes",
+      "role": "teller",
+      "password_hash": "pbkdf2_sha256$600000$a2e1c6fe4528bb8c88308f5bfbef06c5$8c2cf591a45ee203b76a6d6892c872111a47de9493bfb88866de8ecaaf602362"
+    },
+    {
+      "username": "adair.patel",
+      "full_name": "Adair Patel",
+      "role": "teller",
+      "password_hash": "pbkdf2_sha256$600000$e103c66474c739f59b60f2dd52a525e6$5dc824f58d2c298eb283eba0095bf376f2fcb89ec08e6bddacef665abd8b9b6c"
+    }
+  ]
+}
+

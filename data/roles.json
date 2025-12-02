@@ -1,0 +1,68 @@
+{
+  "roles": [
+    {
+      "name": "client",
+      "label": "Client",
+      "allow_self_signup": true,
+      "permissions": [
+        "VIEW_ACCOUNT_BALANCE",
+        "VIEW_INVESTMENT_PORTFOLIO",
+        "VIEW_FINANCIAL_ADVISOR_CONTACT"
+      ],
+      "constraints": []
+    },
+    {
+      "name": "premium_client",
+      "label": "Premium Client",
+      "allow_self_signup": true,
+      "permissions": [
+        "VIEW_ACCOUNT_BALANCE",
+        "VIEW_INVESTMENT_PORTFOLIO",
+        "VIEW_FINANCIAL_ADVISOR_CONTACT",
+        "VIEW_FINANCIAL_PLANNER_CONTACT",
+        "MODIFY_INVESTMENT_PORTFOLIO"
+      ],
+      "constraints": []
+    },
+    {
+      "name": "financial_advisor",
+      "label": "Financial Advisor",
+      "permissions": [
+        "VIEW_ACCOUNT_BALANCE",
+        "VIEW_INVESTMENT_PORTFOLIO",
+        "MODIFY_INVESTMENT_PORTFOLIO",
+        "VIEW_PRIVATE_CONSUMER_INSTRUMENTS"
+      ],
+      "constraints": []
+    },
+    {
+      "name": "financial_planner",
+      "label": "Financial Planner",
+      "permissions": [
+        "VIEW_ACCOUNT_BALANCE",
+        "VIEW_INVESTMENT_PORTFOLIO",
+        "MODIFY_INVESTMENT_PORTFOLIO",
+        "VIEW_MONEY_MARKET_INSTRUMENTS",
+        "VIEW_PRIVATE_CONSUMER_INSTRUMENTS"
+      ],
+      "constraints": []
+    },
+    {
+      "name": "teller",
+      "label": "Teller",
+      "permissions": [
+        "VIEW_ACCOUNT_BALANCE",
+        "VIEW_INVESTMENT_PORTFOLIO"
+      ],
+      "constraints": [
+        {
+          "type": "time_window",
+          "start": "09:00",
+          "end": "17:00",
+          "timezone": "local"
+        }
+      ]
+    }
+  ]
+}
+
