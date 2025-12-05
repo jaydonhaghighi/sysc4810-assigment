@@ -1,5 +1,3 @@
-"""CLI entry point for Problem 4: user login and privilege display."""
-
 from __future__ import annotations
 
 from datetime import datetime
@@ -11,11 +9,12 @@ from justinvest.repository import load_roles
 
 try:
     import getpass
-except ImportError:  # pragma: no cover
+except ImportError:
     getpass = None
 
 
 def main() -> None:
+    """runs the login portal, authenticates the user, and displays their permissions."""
     print("justInvest Login Portal")
     print(format_operations_menu())
 
@@ -25,7 +24,7 @@ def main() -> None:
     username = input("\nEnter username: ").strip()
     if getpass:
         password = getpass.getpass("Enter password: ")
-    else:  # pragma: no cover
+    else:
         password = input("Enter password: ")
 
     try:
@@ -55,4 +54,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

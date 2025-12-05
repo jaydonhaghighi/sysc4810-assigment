@@ -39,7 +39,7 @@ def files(tmp_path: Path) -> tuple[Path, Path]:
     return passwd, users
 
 
-def test_successful_enrollment_updates_files(
+def test_successful_enrollment(
     client_role: RoleDefinition, files: tuple[Path, Path]
 ) -> None:
     passwd_path, users_path = files
@@ -60,7 +60,7 @@ def test_successful_enrollment_updates_files(
     assert users["users"][0]["username"] == "new.client"
 
 
-def test_enrollment_rejects_duplicate_username(
+def test_duplicate_username(
     client_role: RoleDefinition, files: tuple[Path, Path]
 ) -> None:
     passwd_path, users_path = files
@@ -84,7 +84,7 @@ def test_enrollment_rejects_duplicate_username(
         )
 
 
-def test_enrollment_rejects_disallowed_role(
+def test_disallowed_role(
     teller_role: RoleDefinition, files: tuple[Path, Path]
 ) -> None:
     passwd_path, users_path = files
@@ -100,7 +100,7 @@ def test_enrollment_rejects_disallowed_role(
         )
 
 
-def test_enrollment_rejects_weak_password(
+def test_weak_password(
     client_role: RoleDefinition, files: tuple[Path, Path]
 ) -> None:
     passwd_path, users_path = files
@@ -114,4 +114,3 @@ def test_enrollment_rejects_weak_password(
             passwd_path=passwd_path,
             users_path=users_path,
         )
-

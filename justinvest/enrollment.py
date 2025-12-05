@@ -1,5 +1,3 @@
-"""User enrollment helpers for Problem 3."""
-
 from __future__ import annotations
 
 import json
@@ -16,7 +14,7 @@ DEFAULT_PASSWD_PATH = Path(__file__).resolve().parents[1] / "passwd.txt"
 
 
 class EnrollmentError(Exception):
-    """Raised when enrollment fails."""
+    """raised when signup fails."""
 
 
 @dataclass(frozen=True)
@@ -29,7 +27,7 @@ class EnrollmentResult:
 
 
 def get_self_signup_roles(roles: Iterable[RoleDefinition]) -> List[RoleDefinition]:
-    """Return the subset of roles that permit self-service enrollment."""
+    """finds which roles let people sign themselves up."""
 
     return [role for role in roles if role.allow_self_signup]
 
@@ -43,7 +41,7 @@ def enroll_user(
     passwd_path: Path | None = None,
     users_path: Path | None = None,
 ) -> EnrollmentResult:
-    """Enroll a user by appending to passwd.txt and users.json."""
+    """adds a new user to the system."""
 
     policy = policy or PasswordPolicy()
     check = policy.validate(username, password)

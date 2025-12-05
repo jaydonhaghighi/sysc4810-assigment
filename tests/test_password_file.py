@@ -16,19 +16,19 @@ def passwd_file(tmp_path: Path) -> Path:
     return dest
 
 
-def test_get_record_returns_existing_user(passwd_file: Path) -> None:
+def test_get_existing_record(passwd_file: Path) -> None:
     record = get_record("sasha.kim", passwd_file)
     assert record is not None
     assert record.role == "client"
 
 
-def test_verify_credentials_success_and_failure(passwd_file: Path) -> None:
+def test_verify_credentials(passwd_file: Path) -> None:
     assert verify_credentials("sasha.kim", "Aster!1A", path=passwd_file)
     assert not verify_credentials("sasha.kim", "wrongpass", path=passwd_file)
     assert not verify_credentials("unknown", "whatever", path=passwd_file)
 
 
-def test_add_record_appends_unique_hash(passwd_file: Path) -> None:
+def test_add_record(passwd_file: Path) -> None:
     new_record = add_record(
         "new.user",
         "client",
@@ -42,7 +42,7 @@ def test_add_record_appends_unique_hash(passwd_file: Path) -> None:
     assert lines[-1].startswith("new.user|client|pbkdf2_sha256$")
 
 
-def test_add_record_rejects_duplicates(passwd_file: Path) -> None:
+def test_add_record_duplicate(passwd_file: Path) -> None:
     with pytest.raises(ValueError):
         add_record("sasha.kim", "client", "Another@123", path=passwd_file)
 

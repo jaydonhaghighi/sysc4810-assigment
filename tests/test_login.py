@@ -30,7 +30,7 @@ def passwd_file(tmp_path: Path) -> Path:
     return dest
 
 
-def test_login_success_displays_permissions(roles, engine, passwd_file: Path) -> None:
+def test_login_success(roles, engine, passwd_file: Path) -> None:
     result = perform_login(
         "sasha.kim",
         "Aster!1A",
@@ -45,7 +45,7 @@ def test_login_success_displays_permissions(roles, engine, passwd_file: Path) ->
     assert "Modify investment portfolio" not in result.allowed_operation_labels
 
 
-def test_login_rejects_invalid_password(roles, engine, passwd_file: Path) -> None:
+def test_login_invalid_password(roles, engine, passwd_file: Path) -> None:
     with pytest.raises(LoginError):
         perform_login(
             "sasha.kim",
@@ -56,7 +56,7 @@ def test_login_rejects_invalid_password(roles, engine, passwd_file: Path) -> Non
         )
 
 
-def test_login_rejects_unknown_user(roles, engine, passwd_file: Path) -> None:
+def test_login_unknown_user(roles, engine, passwd_file: Path) -> None:
     with pytest.raises(LoginError):
         perform_login(
             "nonexistent.user",
@@ -67,7 +67,7 @@ def test_login_rejects_unknown_user(roles, engine, passwd_file: Path) -> None:
         )
 
 
-def test_login_fails_for_unknown_role(engine, passwd_file: Path, roles) -> None:
+def test_login_unknown_role(engine, passwd_file: Path, roles) -> None:
     add_record("ghost.user", "mystery_role", "Valid@123", path=passwd_file, iterations=1000, salt_bytes=8)
     with pytest.raises(LoginError):
         perform_login(

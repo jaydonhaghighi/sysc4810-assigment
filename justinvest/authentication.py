@@ -1,5 +1,3 @@
-"""Authentication helpers for the justInvest prototype."""
-
 from __future__ import annotations
 
 import hashlib
@@ -11,7 +9,7 @@ from .models import UserRecord, build_user_lookup
 
 
 class AuthenticationError(Exception):
-    """Raised when authentication input is invalid or corrupt."""
+    """raised when authentication fails."""
 
 
 def _parse_hash(hash_string: str) -> tuple[str, int, bytes, bytes]:
@@ -25,7 +23,7 @@ def _parse_hash(hash_string: str) -> tuple[str, int, bytes, bytes]:
 
 
 def verify_password(password: str, stored_hash: str) -> bool:
-    """Verify a password against a stored PBKDF2 hash."""
+    """checks if the password matches what we have on file."""
 
     algorithm, iterations, salt, stored_digest = _parse_hash(stored_hash)
     if algorithm != "pbkdf2_sha256":
@@ -44,7 +42,7 @@ class AuthenticatedUser:
 
 
 class CredentialStore:
-    """In-memory credential store backed by the JSON user list."""
+    """keeps track of users and checks their passwords."""
 
     def __init__(self, users: list[UserRecord]) -> None:
         self._users: Dict[str, UserRecord] = build_user_lookup(users)

@@ -1,5 +1,3 @@
-"""CLI for Problem 3: user enrollment with proactive password checks."""
-
 from __future__ import annotations
 
 from justinvest.enrollment import EnrollmentError, enroll_user, get_self_signup_roles
@@ -8,11 +6,12 @@ from justinvest.repository import load_roles
 
 try:
     import getpass
-except ImportError:  # pragma: no cover
+except ImportError:
     getpass = None
 
 
 def _prompt_username() -> str:
+    """asks the user for a username and keeps asking until they provide one."""
     while True:
         candidate = input("Choose a username: ").strip()
         if candidate:
@@ -21,6 +20,7 @@ def _prompt_username() -> str:
 
 
 def _prompt_role(roles) -> object:
+    """shows available roles and lets the user pick one by number."""
     print("\nSelect your role:")
     for idx, role in enumerate(roles, start=1):
         print(f"{idx}. {role.label} ({role.name})")
@@ -36,11 +36,12 @@ def _prompt_role(roles) -> object:
 
 
 def _prompt_password(policy: PasswordPolicy, username: str) -> str:
+    """asks for a password, confirms it matches, and validates it against the policy."""
     while True:
         if getpass:
             password = getpass.getpass("Choose a password: ")
             confirm = getpass.getpass("Confirm password: ")
-        else:  # pragma: no cover
+        else:
             password = input("Choose a password: ")
             confirm = input("Confirm password: ")
         if password != confirm:
@@ -55,6 +56,7 @@ def _prompt_password(policy: PasswordPolicy, username: str) -> str:
 
 
 def main() -> None:
+    """runs the self-service signup flow, collecting username, role, and password."""
     print("justInvest Self-Service Signup")
     roles = load_roles()
     signup_roles = get_self_signup_roles(roles)
@@ -77,4 +79,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

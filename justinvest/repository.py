@@ -1,5 +1,3 @@
-"\"\"\"Data loading helpers for the justInvest prototype.\"\"\""
-
 from __future__ import annotations
 
 import json
@@ -10,7 +8,7 @@ from .models import ConstraintDefinition, RoleDefinition, UserRecord
 
 
 def _ensure_path(path: Path | None, default_filename: str) -> Path:
-    """Return a usable path, falling back to the repository data directory."""
+    """figures out where to find a data file."""
 
     if path is not None:
         return path
@@ -19,7 +17,7 @@ def _ensure_path(path: Path | None, default_filename: str) -> Path:
 
 
 def load_roles(path: Path | None = None) -> List[RoleDefinition]:
-    """Load role definitions from JSON."""
+    """reads the roles from the config file."""
 
     file_path = _ensure_path(path, "roles.json")
     payload = json.loads(file_path.read_text(encoding="utf-8"))
@@ -42,7 +40,7 @@ def load_roles(path: Path | None = None) -> List[RoleDefinition]:
 
 
 def load_users(path: Path | None = None) -> List[UserRecord]:
-    """Load user records from JSON."""
+    """reads the users from the config file."""
 
     file_path = _ensure_path(path, "users.json")
     payload = json.loads(file_path.read_text(encoding="utf-8"))
@@ -57,4 +55,3 @@ def load_users(path: Path | None = None) -> List[UserRecord]:
             )
         )
     return users
-

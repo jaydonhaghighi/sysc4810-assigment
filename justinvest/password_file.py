@@ -1,5 +1,3 @@
-"""Utilities for creating and using the passwd.txt password file."""
-
 from __future__ import annotations
 
 import hashlib
@@ -15,7 +13,7 @@ DEFAULT_PASSWD_PATH = Path(__file__).resolve().parents[1] / "passwd.txt"
 
 @dataclass(frozen=True)
 class PasswordRecord:
-    """Represents one line stored in passwd.txt."""
+    """stores one user's entry from the password file."""
 
     username: str
     role: str
@@ -36,14 +34,14 @@ def _sanitize(value: str, field_name: str) -> str:
 
 
 def parse_record(line: str) -> PasswordRecord:
-    """Parse a passwd.txt line into a PasswordRecord."""
+    """reads one line from the password file."""
 
     username, role, password_hash = line.rstrip("\n").split("|", maxsplit=2)
     return PasswordRecord(username=username, role=role, password_hash=password_hash)
 
 
 def iter_records(path: Optional[Path] = None) -> Iterator[PasswordRecord]:
-    """Yield records from the password file."""
+    """reads all users from the password file."""
 
     file_path = _resolve_path(path)
     if not file_path.exists():
@@ -55,7 +53,7 @@ def iter_records(path: Optional[Path] = None) -> Iterator[PasswordRecord]:
 
 
 def get_record(username: str, path: Optional[Path] = None) -> Optional[PasswordRecord]:
-    """Return the record for username, if present."""
+    """finds a user's record if they exist."""
 
     username = username.strip()
     for record in iter_records(path):
@@ -81,7 +79,7 @@ def add_record(
     iterations: int = 600_000,
     salt_bytes: int = 16,
 ) -> PasswordRecord:
-    """Append a new record to passwd.txt, returning the stored entry."""
+    """adds a new user to the password file."""
 
     username = _sanitize(username, "username")
     role = _sanitize(role, "role")
@@ -102,7 +100,7 @@ def add_record(
 
 
 def _ends_with_newline(path: Path) -> bool:
-    """Return True if the file currently ends with a newline character."""
+    """checks if the file ends with a newline."""
 
     with path.open("rb") as handle:
         handle.seek(0, 2)
@@ -115,10 +113,9 @@ def _ends_with_newline(path: Path) -> bool:
 def verify_credentials(
     username: str, password: str, *, path: Optional[Path] = None
 ) -> bool:
-    """Return True if the password matches the stored hash for username."""
+    """checks if the password is correct for this user."""
 
     record = get_record(username, path)
     if record is None:
         return False
     return verify_password(password, record.password_hash)
-

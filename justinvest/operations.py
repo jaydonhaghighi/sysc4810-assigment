@@ -1,12 +1,10 @@
-"""Definitions for system operations and helper utilities."""
-
 from dataclasses import dataclass
 from typing import Dict, List
 
 
 @dataclass(frozen=True)
 class Operation:
-    """Represents a business operation exposed by the justInvest prototype."""
+    """represents something a user can do in the system."""
 
     code: str
     label: str
@@ -56,10 +54,9 @@ OPERATIONS_BY_CODE: Dict[str, Operation] = {op.code: op for op in ALL_OPERATIONS
 
 
 def format_operations_menu() -> str:
-    """Return a numbered menu string for CLI presentation."""
+    """builds the menu that shows what operations are available."""
 
     lines = ["Operations available on the system:"]
     for index, operation in enumerate(ALL_OPERATIONS, start=1):
         lines.append(f"{index}. {operation.label}")
     return "\n".join(lines)
-

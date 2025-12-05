@@ -1,5 +1,3 @@
-"""Login helpers for Problem 4."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -12,10 +10,8 @@ from .models import RoleDefinition, SessionContext
 from .operations import ALL_OPERATIONS, OPERATIONS_BY_CODE
 from .password_file import PasswordRecord, get_record, verify_credentials
 
-
 class LoginError(Exception):
-    """Raised when login fails."""
-
+    """raised when login fails."""
 
 @dataclass(frozen=True)
 class LoginResult:
@@ -32,7 +28,6 @@ class LoginResult:
             if code in OPERATIONS_BY_CODE
         ]
 
-
 def perform_login(
     username: str,
     password: str,
@@ -42,7 +37,7 @@ def perform_login(
     passwd_path: Path | None = None,
     as_of: datetime | None = None,
 ) -> LoginResult:
-    """Authenticate and return the user's permissions."""
+    """logs someone in and figures out what they're allowed to do."""
 
     username = username.strip()
     if not username:
@@ -64,10 +59,8 @@ def perform_login(
         allowed_operation_codes=permitted_codes,
     )
 
-
 def _find_role(role_name: str, roles: Iterable[RoleDefinition]) -> RoleDefinition:
     for role in roles:
         if role.name == role_name:
             return role
     raise LoginError(f"Role '{role_name}' is not recognized.")
-

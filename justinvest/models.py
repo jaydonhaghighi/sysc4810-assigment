@@ -1,5 +1,3 @@
-"""Core data models for the justInvest prototype."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -9,7 +7,7 @@ from typing import Dict, Iterable, List, Optional, Sequence, Set
 
 @dataclass(frozen=True)
 class ConstraintDefinition:
-    """Represents a policy constraint attached to a role."""
+    """defines a rule that limits when a role can be used."""
 
     type: str
     params: Dict[str, str]
@@ -17,7 +15,7 @@ class ConstraintDefinition:
 
 @dataclass(frozen=True)
 class RoleDefinition:
-    """Container for role metadata used by the access-control engine."""
+    """stores everything we need to know about a role."""
 
     name: str
     label: str
@@ -31,7 +29,7 @@ class RoleDefinition:
 
 @dataclass(frozen=True)
 class UserRecord:
-    """Represents an entry in the user store."""
+    """stores a user's info from the database."""
 
     username: str
     full_name: str
@@ -41,27 +39,26 @@ class UserRecord:
 
 @dataclass
 class SessionContext:
-    """Holds request-specific metadata used when evaluating constraints."""
+    """stores info about when this request happened."""
 
     as_of: datetime
 
 
 @dataclass
 class AuthorizationDecision:
-    """Result of a permission check."""
+    """indicates whether access was granted and why."""
 
     granted: bool
     reason: Optional[str] = None
 
 
 def build_role_lookup(definitions: Iterable[RoleDefinition]) -> Dict[str, RoleDefinition]:
-    """Convert a list of RoleDefinition objects into a dictionary."""
+    """turns a list of roles into a lookup table."""
 
     return {definition.name: definition for definition in definitions}
 
 
 def build_user_lookup(records: Iterable[UserRecord]) -> Dict[str, UserRecord]:
-    """Convert user records into a dictionary keyed by username."""
+    """turns a list of users into a lookup table."""
 
     return {record.username: record for record in records}
-

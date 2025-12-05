@@ -1,5 +1,3 @@
-"""RBAC-based access control engine for justInvest."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -16,7 +14,7 @@ from .models import (
 
 
 class ConstraintEvaluator(Protocol):
-    """Protocol implemented by constraint evaluators."""
+    """check if access should be allowed."""
 
     def evaluate(self, context: SessionContext) -> AuthorizationDecision:
         ...
@@ -24,7 +22,7 @@ class ConstraintEvaluator(Protocol):
 
 @dataclass
 class TimeWindowConstraint:
-    """Constraint ensuring access is only allowed during a specific time window."""
+    """restricts access to certain hours of the day."""
 
     start: time
     end: time
@@ -43,7 +41,7 @@ class TimeWindowConstraint:
 
 
 class ConstraintFactory:
-    """Factory that builds constraint evaluators from definitions."""
+    """creates constraint checkers from the config."""
 
     def __init__(self) -> None:
         self._builders = {
@@ -66,7 +64,7 @@ class ConstraintFactory:
 
 
 class AccessControlEngine:
-    """Enforces justInvest's access control policy via RBAC."""
+    """decides what each role can and can't do."""
 
     def __init__(self, roles: Iterable[RoleDefinition]) -> None:
         self._roles = build_role_lookup(roles)

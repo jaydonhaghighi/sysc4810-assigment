@@ -1,5 +1,3 @@
-"""CLI entry point for Problem 1c: access control implementation."""
-
 from __future__ import annotations
 
 from datetime import datetime
@@ -13,15 +11,17 @@ from justinvest.repository import load_roles, load_users
 
 try:
     import getpass
-except ImportError:  # pragma: no cover - getpass always available in CPython
+except ImportError:
     getpass = None
 
 
 def _build_operation_index() -> Dict[str, int]:
+    """builds a mapping from operation codes to their menu numbers."""
     return {op.code: idx for idx, op in enumerate(ALL_OPERATIONS, start=1)}
 
 
 def _auth_prompt(credentials: CredentialStore) -> AuthenticatedUser | None:
+    """prompts the user for username and password, then authenticates them."""
     print("\nEnter your credentials to continue.")
     username = input("Enter username: ").strip()
     if not username:
@@ -29,7 +29,7 @@ def _auth_prompt(credentials: CredentialStore) -> AuthenticatedUser | None:
         return None
     if getpass:
         password = getpass.getpass("Enter password: ")
-    else:  # pragma: no cover - fallback for limited environments
+    else:
         password = input("Enter password: ")
     user = credentials.authenticate(username=username, password=password)
     if user is None:
@@ -39,9 +39,8 @@ def _auth_prompt(credentials: CredentialStore) -> AuthenticatedUser | None:
     return user
 
 
-def _display_authorized_operations(
-    engine: AccessControlEngine, user: AuthenticatedUser, context: SessionContext
-) -> None:
+def _display_authorized_operations(engine: AccessControlEngine, user: AuthenticatedUser, context: SessionContext) -> None:
+    """shows the user which operations they can perform and lets them pick one."""
     operation_numbers = _build_operation_index()
     allowed_codes = []
     denial_reason = None
@@ -77,6 +76,7 @@ def _display_authorized_operations(
 
 
 def main() -> None:
+    """runs the main access control demo, showing the menu and handling login."""
     print("justInvest System")
     print(format_operations_menu())
 
@@ -94,4 +94,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

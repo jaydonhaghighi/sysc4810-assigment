@@ -1,5 +1,3 @@
-"""Proactive password policy enforcement for justInvest."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -18,7 +16,7 @@ class PasswordCheckResult:
 
 
 class PasswordPolicy:
-    """Validates candidate passwords against justInvest's requirements."""
+    """checks if passwords meet our rules."""
 
     def __init__(
         self,
@@ -53,7 +51,7 @@ class PasswordPolicy:
         return set()
 
     def validate(self, username: str, password: str) -> PasswordCheckResult:
-        """Return a result describing whether the password meets policy."""
+        """checks the password and tells you what's wrong if anything."""
 
         violations: list[str] = []
         trimmed = password.strip()
@@ -79,4 +77,3 @@ class PasswordPolicy:
             violations.append("Password appears on the weak password blacklist.")
 
         return PasswordCheckResult(is_valid=not violations, violations=violations)
-
