@@ -17,18 +17,21 @@ def passwd_file(tmp_path: Path) -> Path:
 
 
 def test_get_existing_record(passwd_file: Path) -> None:
+    """verifies that we can retrieve an existing user record from the password file."""
     record = get_record("sasha.kim", passwd_file)
     assert record is not None
     assert record.role == "client"
 
 
 def test_verify_credentials(passwd_file: Path) -> None:
+    """verifies that correct passwords pass and incorrect ones fail."""
     assert verify_credentials("sasha.kim", "Aster!1A", path=passwd_file)
     assert not verify_credentials("sasha.kim", "wrongpass", path=passwd_file)
     assert not verify_credentials("unknown", "whatever", path=passwd_file)
 
 
 def test_add_record(passwd_file: Path) -> None:
+    """verifies that adding a new record appends it to the password file with correct format."""
     new_record = add_record(
         "new.user",
         "client",
@@ -43,6 +46,7 @@ def test_add_record(passwd_file: Path) -> None:
 
 
 def test_add_record_duplicate(passwd_file: Path) -> None:
+    """verifies that trying to add a duplicate username raises a ValueError."""
     with pytest.raises(ValueError):
         add_record("sasha.kim", "client", "Another@123", path=passwd_file)
 

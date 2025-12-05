@@ -42,6 +42,7 @@ def files(tmp_path: Path) -> tuple[Path, Path]:
 def test_successful_enrollment(
     client_role: RoleDefinition, files: tuple[Path, Path]
 ) -> None:
+    """verifies that a valid enrollment creates entries in both passwd.txt and users.json."""
     passwd_path, users_path = files
     policy = PasswordPolicy(weak_passwords={"password"})
     result = enroll_user(
@@ -63,6 +64,7 @@ def test_successful_enrollment(
 def test_duplicate_username(
     client_role: RoleDefinition, files: tuple[Path, Path]
 ) -> None:
+    """verifies that trying to enroll the same username twice raises an error."""
     passwd_path, users_path = files
     policy = PasswordPolicy(weak_passwords={"password"})
     enroll_user(
@@ -87,6 +89,7 @@ def test_duplicate_username(
 def test_disallowed_role(
     teller_role: RoleDefinition, files: tuple[Path, Path]
 ) -> None:
+    """verifies that roles that don't allow self-signup cannot be selected during enrollment."""
     passwd_path, users_path = files
     policy = PasswordPolicy(weak_passwords={"password"})
     with pytest.raises(EnrollmentError):
@@ -103,6 +106,7 @@ def test_disallowed_role(
 def test_weak_password(
     client_role: RoleDefinition, files: tuple[Path, Path]
 ) -> None:
+    """verifies that passwords on the blacklist are rejected during enrollment."""
     passwd_path, users_path = files
     policy = PasswordPolicy(weak_passwords={"password"})
     with pytest.raises(EnrollmentError):

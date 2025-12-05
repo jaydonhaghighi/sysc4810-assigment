@@ -31,6 +31,7 @@ def passwd_file(tmp_path: Path) -> Path:
 
 
 def test_login_success(roles, engine, passwd_file: Path) -> None:
+    """verifies that valid credentials log in successfully and return the correct permissions."""
     result = perform_login(
         "sasha.kim",
         "Aster!1A",
@@ -46,6 +47,7 @@ def test_login_success(roles, engine, passwd_file: Path) -> None:
 
 
 def test_login_invalid_password(roles, engine, passwd_file: Path) -> None:
+    """verifies that incorrect passwords raise a LoginError."""
     with pytest.raises(LoginError):
         perform_login(
             "sasha.kim",
@@ -57,6 +59,7 @@ def test_login_invalid_password(roles, engine, passwd_file: Path) -> None:
 
 
 def test_login_unknown_user(roles, engine, passwd_file: Path) -> None:
+    """verifies that non-existent usernames raise a LoginError."""
     with pytest.raises(LoginError):
         perform_login(
             "nonexistent.user",
@@ -68,6 +71,7 @@ def test_login_unknown_user(roles, engine, passwd_file: Path) -> None:
 
 
 def test_login_unknown_role(engine, passwd_file: Path, roles) -> None:
+    """verifies that users with unrecognized roles raise a LoginError."""
     add_record("ghost.user", "mystery_role", "Valid@123", path=passwd_file, iterations=1000, salt_bytes=8)
     with pytest.raises(LoginError):
         perform_login(
